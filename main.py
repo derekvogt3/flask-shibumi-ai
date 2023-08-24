@@ -13,6 +13,14 @@ from langchain.chains import RetrievalQA
 import os
 
 app = Flask(__name__)
+load_dotenv()
+
+embeddings_model = OpenAIEmbeddings(openai_api_key=os.environ.get('OPENAI_API_KEY'))
+
+pinecone.init(api_key=os.getenv("PINECONE_API"),environment=os.getenv("PINECONE_ENV"))
+
+index = pinecone.Index(index_name='shibumi-retrieval-agent')
+vectorstore = Pinecone(index, embeddings_model.embed_query,"text")
 
 @app.route('/', methods=['POST'])
 def index():
