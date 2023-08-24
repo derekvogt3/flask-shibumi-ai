@@ -15,6 +15,11 @@ import os
 app = Flask(__name__)
 load_dotenv()
 
+CORS(app)
+
+CORS(app, origins=["https://flask-production-c8257.up.railway.app/"])
+
+
 embeddings_model = OpenAIEmbeddings(openai_api_key=os.environ.get('OPENAI_API_KEY'))
 
 pinecone.init(api_key=os.getenv("PINECONE_API"),environment=os.getenv("PINECONE_ENV"))
