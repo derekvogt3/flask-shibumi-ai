@@ -36,7 +36,7 @@ def index():
     vectorstore.similarity_search(query=query, k=3)
     llm = ChatOpenAI(openai_api_key=os.environ.get('OPENAI_API_KEY'),model_name='gpt-3.5-turbo', temperature=0.0)
     qa = RetrievalQA.from_chain_type(llm=llm, chain_type='stuff', retriever=vectorstore.as_retriever())
-    return jsonify({"message": qa.run(data)}), 200
+    return jsonify({"message": qa.run(query)}), 200
 
 if __name__ == '__main__':
   app.run(port=5000)
